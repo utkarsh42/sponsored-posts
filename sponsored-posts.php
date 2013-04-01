@@ -27,41 +27,42 @@ function pd_sponsored_posts_register() {
 }
 add_action( 'init', 'pd_sponsored_posts_register' );
 
-function pd_sponsored_posts_inject( $posts ) {
-  if ( is_main_query() && !( is_home() || is_category() || is_tag() ) )
+function pd_sponsored_posts_inject( $posts , $query) {
+
+  if ( $query->is_main_query() && ( $query->is_home() || $query->is_category() || $query->is_tag() ) ) {    
+  
+    $args = array( 
+  		'post_type' => 'sponsor',
+  		'posts_per_page' => 1,
+  		'orderby' => 'rand'
+  	);
+
+  	if ( !empty( $wp_query->query['category_name'] ) )
+  	  $args['category_name'] = $query->query['category_name'];
+
+  	if ( !empty( $query->query['tag'] ) )
+  	  $args['tag'] = $query->query['tag'];
+	
+  	$sponsors = get_posts( $args );
+  	if ( count( $sponsors ) == 0 )
+  	  return $posts;
+	
+  	$len = count( $posts );
+  	$slot = $slot = wp_rand( 0, $len );
+    $combined = array();
+  
+    for( $i = 0; $i < $len; $i++ ) {
+      $combined[] = $posts[$i];
+      if ( $slot == $i )
+        $combined[] = $sponsors[0];
+    }
+  
+    return $combined;
+  } else {
     return $posts;
-    
-  global $wp_query; 
-  
-  $args = array( 
-		'post_type' => 'sponsor',
-		'posts_per_page' => 1,
-		'orderby' => 'rand'
-	);
-
-	if ( !empty( $wp_query->query['category_name'] ) )
-	  $args['category_name'] = $wp_query->query['category_name'];
-
-	if ( !empty( $wp_query->query['tag'] ) )
-	  $args['tag'] = $wp_query->query['tag'];
-	
-	$sponsors = get_posts( $args );
-	if ( count( $sponsors ) == 0 )
-	  return $posts;
-	
-	$len = count( $posts );
-	$slot = $slot = wp_rand( 0, $len );
-  $combined = array();
-  
-  for( $i = 0; $i < $len; $i++ ) {
-    $combined[] = $posts[$i];
-    if ( $slot == $i )
-      $combined[] = $sponsors[0];
   }
-  
-  return $combined;
 }
-add_action( 'the_posts', 'pd_sponsored_posts_inject');
+add_action( 'the_posts', 'pd_sponsored_posts_inject', 10, 2);
 
 /**
  * ensures external links for sponsored posts open in new window
