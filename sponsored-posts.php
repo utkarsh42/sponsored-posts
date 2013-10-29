@@ -152,15 +152,16 @@ class SMRT_Sponsored_Posts {
 			return;
 		}
 
-		// if home, category or tag
-		if ( $query->is_home() || $query->is_category() || $query->is_tag() ) {
-			// if not sponsored_posts specified, support automatic injection via settings
-			$var = $query->get( 'sponsored_posts');
-			if ( empty( $var ) ) {
-				$options = get_option( 'smrt_sponsored_options' );
-				if ( isset( $options['auto'] ) && !empty( $options['auto'] ) ) {
-					$query->set( 'sponsored_posts' , $options['auto'] );
-				}
+		if ( !$query->is_home() && !$query->is_category() && !$query->is_tag() ) {
+			return;
+		}
+
+		// if not sponsored_posts specified, support automatic injection via settings
+		$var = $query->get( 'sponsored_posts');
+		if ( empty( $var ) ) {
+			$options = get_option( 'smrt_sponsored_options' );
+			if ( isset( $options['auto'] ) && !empty( $options['auto'] ) ) {
+				$query->set( 'sponsored_posts' , $options['auto'] );
 			}
 		}
 
