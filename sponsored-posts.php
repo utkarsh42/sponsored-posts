@@ -259,7 +259,7 @@ class SMRT_Sponsored_Posts {
 	 * @since 0.8.0
 	**/
 	public function main_help() {
-		//echo '<p>Sponsored Posts General Settings</p>';
+		// Simple settings page, function is required as part of add_settings_section but nothing needed to be displayed.
 	}
 
 	/** 
