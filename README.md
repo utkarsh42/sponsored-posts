@@ -12,7 +12,7 @@ The Sponsored Posts Plugin aims to provide the following features to your WordPr
 
 * Ability to author sponsored posts (custom post type)
 * Ability to automatically inject sponsored posts into index (home), category, and tag archive pages.
-* Ability to selelectively inject sponsored posts into any query
+* Ability to selectively inject sponsored posts into any query
 * Ability to target sponsored posts by category or tag
 * Ability to randomly to inject sponsored posts at a random location or specific locations within your query results.
 
@@ -58,7 +58,7 @@ To inject sponsored posts, this plugin introduces a new query var named 'sponsor
 
 ## Auto Injection
 
-To automatically inject sponsored posts into your home, cateogry, and tag archive pages without modifying your theme, you can specify the default sponsored_posts value in the WP Admin Dashboard via Settings->Sponsored Posts.  Specify a value of -1 to inject at a random location or a comma separated list of locations to be more specific.  To disable automatic injection, leave the configuration setting blank.
+To automatically inject sponsored posts into your home, category, and tag archive pages without modifying your theme, you can specify the default sponsored_posts value in the WP Admin Dashboard via Settings->Sponsored Posts.  Specify a value of -1 to inject at a random location or a comma separated list of locations to be more specific.  To disable automatic injection, leave the configuration setting blank.
 
 ## Contributors
 
